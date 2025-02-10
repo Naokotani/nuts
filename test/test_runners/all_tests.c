@@ -5,9 +5,13 @@
     SPDX-License-Identifier: MIT
 ========================================================================= */
 
-#include "unity_fixture.h"
+#include "../unity_fixture.h"
 
-static void RunAllTests(void) { RUN_TEST_GROUP(Buffer); }
+static void RunAllTests(void) {
+  RUN_TEST_GROUP(Buffer);
+  RUN_TEST_GROUP(Line);
+  RUN_TEST_GROUP(Point);
+}
 
 int main(int argc, const char *argv[]) {
   return UnityMain(argc, argv, RunAllTests);

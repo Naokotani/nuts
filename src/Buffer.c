@@ -21,15 +21,31 @@ a 'Point' which represents the users position in NUTS.
 
 */
 
-Buffer initBuffer(char *name) {
-  Buffer buffer;
-  buffer.fl = NULL;
-  buffer.ll = NULL;
-  buffer.nl = 0;
-  buffer.nc = 0;
-  buffer.nw = 0;
-  buffer.name = malloc(sizeof(char) * strlen(name));
-  strcpy(buffer.name, name);
-  buffer.path = NULL;
+Buffer *initBuffer(char *name) {
+  Buffer *buffer = malloc(sizeof(Buffer));
+  buffer->fl = NULL;
+  buffer->ll = NULL;
+  buffer->nl = 0;
+  buffer->nc = 0;
+  buffer->nw = 0;
+  buffer->name = malloc(sizeof(char) * strlen(name));
+  strcpy(buffer->name, name);
+  buffer->path = NULL;
   return buffer;
+}
+
+void freeBuffer(Buffer *buffer) {
+  free(buffer->name);
+  if (buffer->path != NULL) {
+    free(buffer->path);
+  }
+  Line *freeLine;
+  Line *currLine = buffer->fl;
+  while (currLine != NULL) {
+    freeLine = currLine;
+    // TODO use freeLine function
+    free(freeLine);
+    currLine = currLine->next;
+  }
+  free(buffer);
 }

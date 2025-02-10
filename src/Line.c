@@ -19,12 +19,26 @@
   in the buffer.
 */
 
-Line initLine(int linNum) {
-  Line line;
-  line.fw = NULL;
-  line.lw = NULL;
-  line.next = NULL;
-  line.prev = NULL;
-  line.lineNum = linNum;
+Line *initLine(int linNum) {
+  Line *line = malloc(sizeof(Line));
+  line->fw = NULL;
+  line->lw = NULL;
+  line->next = NULL;
+  line->prev = NULL;
+  line->lineNum = linNum;
   return line;
+}
+
+void freeLine(Line *line) {
+  if (line->fw != NULL) {
+    Word *freeWord;
+    Word *currWord = line->fw;
+    while (currWord != NULL) {
+      freeWord = currWord;
+      // user freeWord() function
+      free(freeWord);
+      currWord = currWord->next;
+    }
+  }
+  free(line);
 }

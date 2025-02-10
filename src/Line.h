@@ -2,6 +2,7 @@
 #ifndef LINE
 #define LINE
 
-Line initLine(int lineNum);
+Line *initLine(int lineNum);
+void freeLine(Line *line);
 
 #endif

@@ -52,6 +52,12 @@ SRC_FILES1=\
 	src/Buffer.c \
   test/TestBuffer.c \
   test/test_runners/Buffer_Runner.c \
+	src/Line.c \
+  test/TestLine.c \
+  test/test_runners/Line_Runner.c \
+	src/Point.c \
+  test/TestPoint.c \
+  test/test_runners/Point_Runner.c \
   test/test_runners/all_tests.c
 INC_DIRS=-Isrc -I$(UNITY_ROOT)/src -I$(UNITY_ROOT)/extras/fixture/src
 SYMBOLS=-DUNITY_FIXTURE_NO_EXTRAS

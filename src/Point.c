@@ -14,10 +14,12 @@ The point is the user's location in the text editor in general and a buffer in
 specific. It must be associated with a buffer even if it is totally empty.
 */
 
-Point initPoint(Buffer *buffer, Line *line) {
-  Point point;
-  point.line = line;
-  point.col = 0;
-  point.buffer = buffer;
+Point *initPoint(Buffer *buffer, Line *line) {
+  Point *point = malloc(sizeof(Point));
+  point->line = line;
+  point->col = 0;
+  point->buffer = buffer;
   return point;
 }
+
+void freePoint(Point *point) { free(point); }
