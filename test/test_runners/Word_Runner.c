@@ -1,4 +1,3 @@
-#include "unity.h"
-#include "unity_fixture.h"
+#include "../unity_fixture.h"
 
-TEST_GROUP_RUNNER(Line) { RUN_TEST_CASE(Line, TestLineInitialized); }
+TEST_GROUP_RUNNER(Word) { RUN_TEST_CASE(Word, TestWordInitialized); }

@@ -9,7 +9,6 @@ Buffer *buffer3;
 TEST_GROUP(Buffer);
 
 TEST_SETUP(Buffer) {
-
   buffer1 = initBuffer((char *)"foo");
   buffer2 = initBuffer((char *)"bar");
   buffer3 = initBuffer((char *)"baz");

@@ -1,5 +1,6 @@
 #include "Line.h"
 #include "Types.h"
+#include "Word.h"
 
 /*
   Functions for initalizing, destroying and manipulating `Line`:
@@ -31,12 +32,11 @@ Line *initLine(int linNum) {
 
 void freeLine(Line *line) {
   if (line->fw != NULL) {
-    Word *freeWord;
+    Word *fWord;
     Word *currWord = line->fw;
     while (currWord != NULL) {
-      freeWord = currWord;
-      // user freeWord() function
-      free(freeWord);
+      fWord = currWord;
+      freeWord(fWord);
       currWord = currWord->next;
     }
   }

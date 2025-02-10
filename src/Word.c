@@ -1,3 +1,4 @@
+#include "Word.h"
 #include "Types.h"
 #include <string.h>
 
@@ -19,12 +20,17 @@ is added. If a white space character or a new line is added, the word ends and a
 new white space begins in vice versa.
 */
 
-Word initWord(char *c) {
-  Word word;
-  word.size = strlen(c);
-  word.string = calloc(word.size, sizeof(char));
-  strcpy(word.string, c);
-  word.next = NULL;
-  word.prev = NULL;
+Word *initWord(char *c) {
+  Word *word = malloc(sizeof(Word));
+  word->size = strlen(c) + 1;
+  word->string = calloc(word->size, sizeof(char));
+  strcpy(word->string, c);
+  word->next = NULL;
+  word->prev = NULL;
   return word;
+}
+
+void freeWord(Word *word) {
+  free(word->string);
+  free(word);
 }

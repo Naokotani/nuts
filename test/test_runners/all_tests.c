@@ -10,6 +10,7 @@
 static void RunAllTests(void) {
   RUN_TEST_GROUP(Buffer);
   RUN_TEST_GROUP(Line);
+  RUN_TEST_GROUP(Word);
   RUN_TEST_GROUP(Point);
 }
 

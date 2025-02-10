@@ -58,6 +58,9 @@ SRC_FILES1=\
 	src/Point.c \
   test/TestPoint.c \
   test/test_runners/Point_Runner.c \
+	src/Word.c \
+  test/TestWord.c \
+  test/test_runners/Word_Runner.c \
   test/test_runners/all_tests.c
 INC_DIRS=-Isrc -I$(UNITY_ROOT)/src -I$(UNITY_ROOT)/extras/fixture/src
 SYMBOLS=-DUNITY_FIXTURE_NO_EXTRAS

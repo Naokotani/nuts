@@ -2,6 +2,6 @@
 #ifndef WORD
 #define WORD
 
-Word initWord();
-
+Word *initWord(char *);
+void freeWord(Word *word);
 #endif
