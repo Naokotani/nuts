@@ -23,7 +23,7 @@ TEST_TEAR_DOWN(Buffer) {
 
 /* Test to ensure buffer is initialized and the name is correct. */
 TEST(Buffer, TestBufferIniatialzed) {
-  TEST_ASSERT_EQUAL_STRING("foo", buffer1->name);
+  TEST_ASSERT_EQUAL_STRING("oo", buffer1->name);
   TEST_ASSERT_EQUAL_STRING("bar", buffer2->name);
   TEST_ASSERT_EQUAL_STRING("baz", buffer3->name);
 }

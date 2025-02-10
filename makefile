@@ -69,7 +69,9 @@ all: clean default
 
 default:
 	$(C_COMPILER) $(CFLAGS) $(INC_DIRS) $(SYMBOLS) $(SRC_FILES1) -o $(TARGET1)
-	- ./$(TARGET1) -v
+	- ./$(TARGET1) -v | sed --unbuffered \
+  -e 's/\(.*FAIL.*\)/\o033[31m\1\o033[39m/' \
+  -e 's/\(.*PASS.*\)/\o033[32m\1\o033[39m/'
 
 clean:
 	$(CLEANUP) $(TARGET1)
