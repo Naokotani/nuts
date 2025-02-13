@@ -1,5 +1,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
+#define CHAR_BUFFER 5
+
 #ifndef TYPES
 #define TYPES
 

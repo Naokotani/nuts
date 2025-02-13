@@ -1,5 +1,7 @@
 #include "Word.h"
 #include "Types.h"
+#include <cstdlib>
+#include <stdlib.h>
 #include <string.h>
 
 /*
@@ -23,11 +25,30 @@ new white space begins in vice versa.
 Word *initWord(char *c) {
   Word *word = malloc(sizeof(Word));
   word->size = strlen(c) + 1;
-  word->string = calloc(word->size, sizeof(char));
+  word->string = calloc(CHAR_BUFFER, sizeof(char));
   strcpy(word->string, c);
   word->next = NULL;
   word->prev = NULL;
   return word;
+}
+
+char *addChar(char c, int index, Word *word) {
+  char *newString;
+  if (word->size % CHAR_BUFFER == 0) {
+    newString = calloc(word->size + CHAR_BUFFER, sizeof(char));
+    word->string =
+        reallocarray(word->string, word->size + CHAR_BUFFER, sizeof(char));
+  } else {
+    newString = calloc(word->size, sizeof(char));
+  }
+
+  int i = 0;
+  while ((*newString++ = *word->string++) != '\0' && i < index)
+    i++;
+
+  newString[index + 1] = c;
+
+  return word->string;
 }
 
 void freeWord(Word *word) {
