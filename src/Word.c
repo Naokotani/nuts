@@ -1,5 +1,6 @@
 #include "Word.h"
 #include "Types.h"
+#include <malloc.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,6 +40,13 @@ char *addChar(char c, size_t index, Word *word) {
       malloc(sizeof(char) * ((word->size + 1 / CHAR_BUFFER) + 1) * CHAR_BUFFER);
   char *incString = newString;
   char *oldString = word->string;
+
+  if (word->size % CHAR_BUFFER == 0) {
+    int newSize = (word->size / CHAR_BUFFER) * CHAR_BUFFER;
+    char *ptr = reallocarray(word->string, newSize + CHAR_BUFFER, sizeof(char));
+    strcpy(ptr, word->string);
+    word->string = ptr;
+  }
 
   size_t i = 0;
   while (i < index && (*incString++ = *oldString++))
