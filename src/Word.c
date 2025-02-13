@@ -1,6 +1,7 @@
 #include "Word.h"
 #include "Types.h"
-#include <cstdlib>
+#include <stddef.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -22,32 +23,42 @@ is added. If a white space character or a new line is added, the word ends and a
 new white space begins in vice versa.
 */
 
-Word *initWord(char *c) {
+Word *initWord(char c) {
   Word *word = malloc(sizeof(Word));
-  word->size = strlen(c) + 1;
+  word->size = 2;
   word->string = calloc(CHAR_BUFFER, sizeof(char));
-  strcpy(word->string, c);
+  word->string[0] = c;
+  word->string[1] = '\0';
   word->next = NULL;
   word->prev = NULL;
   return word;
 }
 
-char *addChar(char c, int index, Word *word) {
-  char *newString;
-  if (word->size % CHAR_BUFFER == 0) {
-    newString = calloc(word->size + CHAR_BUFFER, sizeof(char));
-    word->string =
-        reallocarray(word->string, word->size + CHAR_BUFFER, sizeof(char));
-  } else {
-    newString = calloc(word->size, sizeof(char));
-  }
+char *addChar(char c, size_t index, Word *word) {
+  char *newString =
+      malloc(sizeof(char) * ((word->size + 1 / CHAR_BUFFER) + 1) * CHAR_BUFFER);
+  char *incString = newString;
+  char *oldString = word->string;
 
-  int i = 0;
-  while ((*newString++ = *word->string++) != '\0' && i < index)
+  size_t i = 0;
+  while (i < index && (*incString++ = *oldString++))
     i++;
 
-  newString[index + 1] = c;
+  newString[index] = c;
 
+  if (index < word->size) {
+    incString++;
+    while ((*incString++ = *oldString++) != '\0')
+      ;
+  } else if (index == word->size) {
+
+  } else {
+    perror("Not enough space in word");
+  }
+  incString[index + 2] = '\0';
+  word->size += 1;
+  strcpy(word->string, newString);
+  free(newString);
   return word->string;
 }
 

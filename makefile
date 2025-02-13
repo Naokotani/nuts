@@ -42,6 +42,7 @@ CFLAGS += -Wno-unknown-pragmas
 CFLAGS += -Wstrict-prototypes
 CFLAGS += -Wundef
 CFLAGS += -Wold-style-definition
+CFLAGS += -g
 #CFLAGS += -Wno-misleading-indentation
 
 TARGET_BASE1=all_tests
