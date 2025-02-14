@@ -27,7 +27,7 @@ new white space begins in vice versa.
 Word *initWord(char c) {
   Word *word = malloc(sizeof(Word));
   word->size = 2;
-  word->string = calloc(CHAR_BUFFER, sizeof(char));
+  word->string = malloc(CHAR_BUFFER * sizeof(char));
   word->string[0] = c;
   word->string[1] = '\0';
   word->next = NULL;
@@ -36,17 +36,10 @@ Word *initWord(char c) {
 }
 
 char *addChar(char c, size_t index, Word *word) {
-  char *newString =
-      malloc(sizeof(char) * ((word->size + 1 / CHAR_BUFFER) + 1) * CHAR_BUFFER);
+  size_t nmemb = ((word->size) / CHAR_BUFFER + 1) * CHAR_BUFFER;
+  char *newString = malloc(nmemb * sizeof(char));
   char *incString = newString;
   char *oldString = word->string;
-
-  if (word->size % CHAR_BUFFER == 0) {
-    int newSize = (word->size / CHAR_BUFFER) * CHAR_BUFFER;
-    char *ptr = reallocarray(word->string, newSize + CHAR_BUFFER, sizeof(char));
-    strcpy(ptr, word->string);
-    word->string = ptr;
-  }
 
   size_t i = 0;
   while (i < index && (*incString++ = *oldString++))
@@ -58,15 +51,14 @@ char *addChar(char c, size_t index, Word *word) {
     incString++;
     while ((*incString++ = *oldString++) != '\0')
       ;
-  } else if (index == word->size) {
-
   } else {
     perror("Not enough space in word");
   }
-  incString[index + 2] = '\0';
   word->size += 1;
-  strcpy(word->string, newString);
-  free(newString);
+
+  free(word->string);
+  word->string = newString;
+
   return word->string;
 }
 
