@@ -35,30 +35,37 @@ Word *initWord(char c) {
   return word;
 }
 
-char *addChar(char c, size_t index, Word *word) {
+/*
+  Added a single character to a word at `index`
+  @param c character to add
+  @param index location in side the word. must be <= to word size + 1
+  @param word to add the character.
+  NOTE: The address of the pointer will change.
+*/
+char *addChar(char c, int index, Word *word) {
+  if (index > (int)word->size + 1) {
+    perror("Index out of range to add to word\n");
+    return word->string;
+  }
+
   size_t nmemb = ((word->size) / CHAR_BUFFER + 1) * CHAR_BUFFER;
   char *newString = malloc(nmemb * sizeof(char));
-  char *incString = newString;
-  char *oldString = word->string;
+  char *incNew = newString;
+  char *incOld = word->string;
 
-  size_t i = 0;
-  while (i < index && (*incString++ = *oldString++))
-    i++;
+  int i = index;
+  while (i-- && (*incNew++ = *incOld++))
+    ;
 
   newString[index] = c;
 
-  if (index < word->size) {
-    incString++;
-    while ((*incString++ = *oldString++) != '\0')
-      ;
-  } else {
-    perror("Not enough space in word");
-  }
-  word->size += 1;
+  incNew++;
+  while ((*incNew++ = *incOld++))
+    ;
 
+  word->size += 1;
   free(word->string);
   word->string = newString;
-
   return word->string;
 }
 
