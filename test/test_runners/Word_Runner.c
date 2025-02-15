@@ -1,6 +1,7 @@
 #include "../unity_fixture.h"
 
 TEST_GROUP_RUNNER(Word) {
-  RUN_TEST_CASE(Word, TestWordInitialized);
-  RUN_TEST_CASE(Word, TestCharAdded);
+  RUN_TEST_CASE(Word, WordInitialized);
+  RUN_TEST_CASE(Word, CharAdded);
+  RUN_TEST_CASE(Word, CharDeleted);
 }

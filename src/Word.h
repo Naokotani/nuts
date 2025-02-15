@@ -5,4 +5,5 @@
 Word *initWord(char c);
 void freeWord(Word *word);
 char *addChar(char c, int index, Word *word);
+char *delChar(int index, Word *word);
 #endif
