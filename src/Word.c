@@ -92,17 +92,24 @@ char *addChar(char c, int index, Word *word) {
 Deletes a character from the char * in a word.
 @param The index to be deleted.
 @param The struct holding the word to be deleted.
-TODO: memory management, shrink buffer based of CHAR_BUFFER and word size.
+NOTE: I believe this should resize at most every 5 deletes
+if the char is deleted from the end, it should hit the resize inevitably
+and deleting mid word will resize regardless.
 */
 char *delChar(int index, Word *word) {
-  // NOTE: Early return if final letter is deleted
+  size_t nmemb = ((word->size - 1) / CHAR_BUFFER + 1) * CHAR_BUFFER;
+
+  // NOTE: Early return if final letter is deleted.
   if (index == (int)word->size - 2) {
+    if ((word->size) % CHAR_BUFFER == 0) {
+      word->string = reallocarray(word->string, nmemb, sizeof(char));
+    }
+
     word->string[index] = '\0';
     word->size--;
     return word->string;
   }
 
-  size_t nmemb = ((word->size - 1) / CHAR_BUFFER + 1) * CHAR_BUFFER;
   char *newString = malloc(sizeof(char) * nmemb);
   char *incNew = newString;
   char *incOld = word->string;
