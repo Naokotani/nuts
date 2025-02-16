@@ -27,4 +27,5 @@ deletions or additions were not at the end of the word.
 
 I am pretty happy with the functions for manipulating words. Next I should try
 to build the functions to construct lines. I should also add to the
-documentation for the `Word` functions.
+documentation for the `Word` functions. I also need to create tests to ensure
+that all example code in `Word.c` is correct and will work as expected.

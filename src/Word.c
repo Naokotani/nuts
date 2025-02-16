@@ -25,6 +25,8 @@ new white space begins in vice versa.
 */
 
 size_t getNmemb(size_t size_t);
+bool checkIndices(int start, int end, size_t size);
+bool checkIndex(int index, size_t size);
 
 Word *initWord(char c) {
   Word *word = malloc(sizeof(Word));
@@ -37,11 +39,20 @@ Word *initWord(char c) {
   return word;
 }
 
+/*
+Add a string to an existing word. The new string can optionally erase a
+substring of the old string be making the `end` greater than `start`. For a
+simple insert with no replace, end should be equal to start.
+
+Example: The string "Hear" can be replaced with "Hello" with:
+`addString("llo", 2, 4, exampleWord)`
+Important to note that 4 is the index just part the "r" in her. the final
+possible index that can be accessed (IE. word size - 1).
+ */
 char *addString(char *string, int start, int end, Word *word) {
-  if (end < start) {
-    perror("String start cannot be less than end");
+  if (!checkIndices(start, end, word->size))
     return word->string;
-  }
+
   int strLength = strlen(string);
   int length = end - start;
   /*
@@ -79,17 +90,17 @@ char *addString(char *string, int start, int end, Word *word) {
 }
 
 /*
-  Added a single character to a word at `index`
-  @param c character to add
-  @param index location in side the word. must be <= to word size + 1
-  @param word to add the character.
+  Add a single character, `c` to a `word` (IE. Word.string is added to) at
+  `index`.
+
+  Example: To change "hs" to "His":
+  addChar('i', 1, exampleWord);
+
   NOTE: The address of the pointer will change in most cases
 */
 char *addChar(char c, int index, Word *word) {
-  if (index > (int)word->size + 1) {
-    perror("Index out of range to add to word\n");
+  if (!checkIndex(index, word->size))
     return word->string;
-  }
 
   size_t nmemb = ((word->size + 1) / CHAR_BUFFER + 1) * CHAR_BUFFER;
   // NOTE: Early return if adding to the end of the string.
@@ -130,14 +141,19 @@ char *addChar(char c, int index, Word *word) {
 }
 
 /*
-Deletes a character from the char * in a word.
-@param The index to be deleted.
-@param The struct holding the word to be deleted.
+Deletes a character from the char * (IE. Word.string) in a `Word` at `index`
+
+Example: to change "Her" to "He"
+delChar(2, exampleWord);
+
 NOTE: I believe this should resize at most every 5 deletes
 if the char is deleted from the end, it should hit the resize inevitably
 and deleting mid word will resize regardless.
 */
 char *delChar(int index, Word *word) {
+  if (!checkIndex(index, word->size))
+    return word->string;
+
   size_t nmemb = ((word->size - 1) / CHAR_BUFFER + 1) * CHAR_BUFFER;
 
   // NOTE: Early return if final letter is deleted.
@@ -175,13 +191,18 @@ void freeWord(Word *word) {
 }
 
 /*
-Deletes a region of the string in a `Word` from index `start` to index `end`.
+Deletes a region of the string in a `Word` (IE. Word.string) from index `start`
+to index `end`. It will return the original string if there is an issue with how
+'start' or 'end' is passed.
+
+Example: to turn "Peanuts" into "nuts"
+delRegion(0, 2, exampleWord);
+
 */
 char *delRegion(int start, int end, Word *word) {
-  if (end > (int)word->size - 1) {
-    perror("End of delete region past last index");
+  if (!checkIndices(start, end, word->size))
     return word->string;
-  }
+
   int length = end - start;
   size_t nmemb = ((word->size - length) / CHAR_BUFFER + 1) * CHAR_BUFFER;
   char *incOld = word->string;
@@ -199,4 +220,34 @@ char *delRegion(int start, int end, Word *word) {
   word->size -= length;
 
   return word->string;
+}
+
+bool checkIndex(int index, size_t size) {
+  bool valid = 0;
+
+  if (index < 0)
+    perror("Index cannot be less than zero");
+  else if (index >= (int)size)
+    perror("Index is exceeds size of string");
+  else
+    valid = 1;
+
+  return valid;
+}
+
+bool checkIndices(int start, int end, size_t size) {
+  bool valid = 0;
+
+  if (start > end)
+    perror("Start index cannot be greater than end index");
+  else if (start < 0)
+    perror("Start index cannot be less than zero");
+  else if (end >= (int)size)
+    perror("End index exceeds size of string");
+  else if (start > end)
+    perror("Start index cannot be greater than end index");
+  else
+    valid = 1;
+
+  return valid;
 }
