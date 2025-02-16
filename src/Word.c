@@ -173,3 +173,27 @@ void freeWord(Word *word) {
   free(word->string);
   free(word);
 }
+
+char *delRegion(int start, int end, Word *word) {
+  if (end > (int)word->size - 1) {
+    perror("End of delete region past last index");
+    return word->string;
+  }
+  int length = end - start;
+  size_t nmemb = ((word->size - length) / CHAR_BUFFER + 1) * CHAR_BUFFER;
+  char *incOld = word->string;
+  char *newString = malloc(nmemb * sizeof(char));
+  char *incNew = newString;
+
+  while (start-- && (*incNew++ = *incOld++))
+    ;
+
+  incOld += length;
+
+  strcpy(incNew, incOld);
+  free(word->string);
+  word->string = newString;
+  word->size -= length;
+
+  return word->string;
+}

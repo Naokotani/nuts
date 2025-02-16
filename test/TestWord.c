@@ -75,3 +75,14 @@ TEST(Word, AddString) {
   TEST_ASSERT_EQUAL_STRING(
       "Helsnareloboo", word1->string = addString((char *)"snare", 3, 8, word1));
 }
+
+TEST(Word, DeleteRegion) {
+  TEST_ASSERT_EQUAL_STRING("Hello!", addString((char *)"ello!", 1, 1, word1));
+  TEST_ASSERT_EQUAL_STRING("He!", delRegion(2, 5, word1));
+  TEST_ASSERT_EQUAL_STRING("He", delChar(2, word1));
+  TEST_ASSERT_EQUAL_STRING("Hercules",
+                           addString((char *)"rcules", 2, 2, word1));
+  // this test actual fails so it returns the input.
+  TEST_ASSERT_EQUAL_STRING("Hercules", delRegion(3, 9, word1));
+  TEST_ASSERT_EQUAL_STRING("Her", delRegion(3, 8, word1));
+}
