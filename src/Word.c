@@ -28,12 +28,11 @@ size_t getNmemb(size_t size_t);
 bool checkIndices(int start, int end, size_t size);
 bool checkIndex(int index, size_t size);
 
-Word *initWord(char c) {
+Word *initWord(void) {
   Word *word = malloc(sizeof(Word));
-  word->size = 2;
+  word->size = 1;
   word->string = malloc(CHAR_BUFFER * sizeof(char));
-  word->string[0] = c;
-  word->string[1] = '\0';
+  word->string[0] = '\0';
   word->next = NULL;
   word->prev = NULL;
   return word;

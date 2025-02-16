@@ -2,7 +2,7 @@
 #ifndef WORD
 #define WORD
 
-Word *initWord(char c);
+Word *initWord(void);
 void freeWord(Word *word);
 char *addChar(char c, int index, Word *word);
 char *delChar(int index, Word *word);
