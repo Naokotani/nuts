@@ -25,8 +25,6 @@ deletions or additions were not at the end of the word.
 
 ## Todo
 
-Now that I have the basic functionality needed to create and delete words one
-character at a time, I will work on the ability to create and delete words in a
-range. I will create different functions for this that that a "start" and "end"
-index. The login should be similar, but I will just need to increment the
-pointer most likely based on n = end - start.
+I am pretty happy with the functions for manipulating words. Next I should try
+to build the functions to construct lines. I should also add to the
+documentation for the `Word` functions.

@@ -174,6 +174,9 @@ void freeWord(Word *word) {
   free(word);
 }
 
+/*
+Deletes a region of the string in a `Word` from index `start` to index `end`.
+*/
 char *delRegion(int start, int end, Word *word) {
   if (end > (int)word->size - 1) {
     perror("End of delete region past last index");
