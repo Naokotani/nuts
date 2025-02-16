@@ -37,6 +37,47 @@ Word *initWord(char c) {
   return word;
 }
 
+char *addString(char *string, int start, int end, Word *word) {
+  if (end < start) {
+    perror("String start cannot be less than end");
+    return word->string;
+  }
+  int strLength = strlen(string);
+  int length = end - start;
+  /*
+   NOTE: This calculation is word size + the length of the new string - length,
+   which is the part of the old string being copied over.
+  */
+  size_t nmemb =
+      ((word->size + strLength - length) / CHAR_BUFFER + 1) * CHAR_BUFFER;
+  char *newString = malloc(nmemb * sizeof(char));
+  char *incNew = newString;
+  char *incOld = word->string;
+
+  int i = start;
+  int index = 0;
+  while (i-- && (*incNew++ = *incOld++))
+    index++;
+
+  while ((*incNew++ = *string++))
+    ;
+
+  incOld += length;
+  index += length;
+  // NOTE: need to decrement here because the pointer is after the null in the
+  // last copy.
+  incNew--;
+
+  if (index < (int)word->size) {
+    strcpy(incNew, incOld);
+  }
+  word->size = word->size + strLength - length;
+  free(word->string);
+  word->string = newString;
+
+  return word->string;
+}
+
 /*
   Added a single character to a word at `index`
   @param c character to add

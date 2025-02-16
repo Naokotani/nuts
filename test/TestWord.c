@@ -62,3 +62,16 @@ TEST(Word, CharDeleted) {
   TEST_ASSERT_EQUAL_STRING("Hello", word1->string = addChar('e', 1, word1));
   TEST_ASSERT_EQUAL_STRING("Hello,", word1->string = addChar(',', 5, word1));
 }
+
+TEST(Word, AddString) {
+  TEST_ASSERT_EQUAL_STRING("He", word1->string = addChar('e', 1, word1));
+  TEST_ASSERT_EQUAL_STRING("Hel", word1->string = addChar('l', 2, word1));
+  TEST_ASSERT_EQUAL_STRING("Helo", word1->string = addChar('o', 3, word1));
+  TEST_ASSERT_EQUAL_STRING("Hello", word1->string = addChar('l', 3, word1));
+  TEST_ASSERT_EQUAL_STRING(
+      "Heltherelo", word1->string = addString((char *)"there", 3, 3, word1));
+  TEST_ASSERT_EQUAL_STRING(
+      "Helthereloboo", word1->string = addString((char *)"boo", 10, 10, word1));
+  TEST_ASSERT_EQUAL_STRING(
+      "Helsnareloboo", word1->string = addString((char *)"snare", 3, 8, word1));
+}
