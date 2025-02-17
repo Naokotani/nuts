@@ -1,6 +1,7 @@
 #include "Line.h"
 #include "Types.h"
 #include "Word.h"
+#include <stdio.h>
 
 /*
   Functions for initalizing, destroying and manipulating `Line`:
@@ -30,15 +31,38 @@ Line *initLine(int linNum) {
   return line;
 }
 
+Line *appendWord(Word *word, Line *line) {
+  if (line->fw == NULL) {
+    line->fw = word;
+    line->lw = word;
+    return line;
+  } else {
+  }
+
+  return line;
+}
+
+void printLine(Line *line) {
+  int i = 0;
+  for (Word *ptr = line->fw;; ptr = ptr->next) {
+    printf("%s", ptr->string);
+    if (ptr->next == NULL || i > 10)
+      break;
+
+    i++;
+  }
+  printf("\n");
+}
+
 void freeLine(Line *line) {
   if (line->fw != NULL) {
-    Word *fWord;
-    Word *currWord = line->fw;
-    while (currWord != NULL) {
-      fWord = currWord;
-      freeWord(fWord);
-      currWord = currWord->next;
-    }
+    // Word *fWord;
+    // Word *currWord = line->fw;
+    // while (currWord != NULL) {
+    //   fWord = currWord;
+    //   freeWord(fWord);
+    //   currWord = currWord->next;
+    // }
   }
   free(line);
 }

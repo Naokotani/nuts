@@ -1,5 +1,5 @@
 #include "../src/Word.h"
-// #include "unity.h"
+#include "unity.h"
 #include "unity_fixture.h"
 
 Word *word1;
