@@ -64,23 +64,23 @@ char *addString(char *string, int start, int end, Word *word) {
   char *incNew = newString;
   char *incOld = word->string;
 
-  int i = start;
-  int index = 0;
-  while (i-- && (*incNew++ = *incOld++))
-    index++;
+  int index = start;
+  while (start-- && (*incNew++ = *incOld++))
+    ;
 
   while ((*incNew++ = *string++))
     ;
 
-  incOld += length;
   index += length;
   // NOTE: need to decrement here because the pointer is after the null in the
   // last copy.
   incNew--;
 
   if (index < (int)word->size) {
+    incOld += length;
     strcpy(incNew, incOld);
   }
+
   word->size = word->size + strLength - length;
   free(word->string);
   word->string = newString;
