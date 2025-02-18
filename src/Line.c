@@ -19,6 +19,7 @@
   line represents line down in the buffer and the prev line represents a line up
   in the buffer.
 */
+// TODO: need to tack size of `Line` and remove this info from `Buffer`
 
 Line *initLine(int linNum) {
   Line *line = malloc(sizeof(Line));
@@ -121,16 +122,20 @@ Word *removeWord(Line *line, Word *word) {
   return move;
 }
 
+/*
+Insert a `Word` into a `Line` before `loc` which is a word in the linked list.
+To inset to the end of a line, use `appedWord()`. Retuns the new `Word`. This
+can be used to move the position of the `Point` to the position of the newly
+added `Word`.
+*/
 Word *insertWord(Line *line, Word *word, Word *loc) {
   if (loc->prev) {
-    // Set new words prev and next.
+    // If loc is not the first word in the list.
     word->prev = loc->prev;
     word->next = loc;
-
-    // Set locs old previous' new next.
     loc->prev->next = word;
-    // Set locs new prevoius
     loc->prev = word;
+    // If loc is the first word in the list.
   } else {
     word->prev = NULL;
     loc->prev = word;

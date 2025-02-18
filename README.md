@@ -25,8 +25,10 @@ deletions or additions were not at the end of the word.
 
 ## Todo
 
-I have started work on `Line.c` adding functions to append, get last, move the
-"cursor" and remove nodes. All seem to work. I had also added test for all the
-examples in `Word.c`, so I can be more sure they stay accurate. Next up I need
-to add examples and do the same for `Line.c`, and add an insert function to
-`Line.c`.
+`Line.c` has most of the basic functionality that it needs and is all tested. I
+currently have the word count stored in the buffer struct. I should remove this
+and store each line's size in the line, and then I can create a buffer function
+that scans the lines to sum their individual word counts to get the total word
+count. I am currently not using the white space boolean, I should also add a
+punctuation boolean so I can have different word counts, with white space, with
+punctuation character words only etc.
