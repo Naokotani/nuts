@@ -82,3 +82,24 @@ TEST(Word, DeleteRegion) {
   TEST_ASSERT_EQUAL_STRING("Hercules", delRegion(3, 9, word1));
   TEST_ASSERT_EQUAL_STRING("Her", delRegion(3, 8, word1));
 }
+
+TEST(Word, AddStringExample) {
+  TEST_ASSERT_EQUAL_STRING("Hear", addString((char *)"Hear", 0, 0, word1));
+  TEST_ASSERT_EQUAL_STRING("Hello", addString((char *)"llo", 2, 4, word1));
+}
+
+TEST(Word, AddCharExample) {
+  TEST_ASSERT_EQUAL_STRING("Hs", addString((char *)"Hs", 0, 0, word1));
+  TEST_ASSERT_EQUAL_STRING("His", addChar('i', 1, word1));
+}
+
+TEST(Word, DelCharExample) {
+  TEST_ASSERT_EQUAL_STRING("Her", addString((char *)"Her", 0, 0, word1));
+  TEST_ASSERT_EQUAL_STRING("He", delChar(2, word1));
+}
+
+TEST(Word, DelRegionExample) {
+  TEST_ASSERT_EQUAL_STRING("Peanuts",
+                           addString((char *)"Peanuts", 0, 0, word1));
+  TEST_ASSERT_EQUAL_STRING("nuts", delRegion(0, 3, word1));
+}

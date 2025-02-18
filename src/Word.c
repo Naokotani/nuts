@@ -92,7 +92,7 @@ char *addString(char *string, int start, int end, Word *word) {
   Add a single character, `c` to a `word` (IE. Word.string is added to) at
   `index`.
 
-  Example: To change "hs" to "His":
+  Example: To change "Hs" to "His":
   addChar('i', 1, exampleWord);
 
   NOTE: The address of the pointer will change in most cases
@@ -195,7 +195,7 @@ to index `end`. It will return the original string if there is an issue with how
 'start' or 'end' is passed.
 
 Example: to turn "Peanuts" into "nuts"
-delRegion(0, 2, exampleWord);
+delRegion(0, 3, exampleWord);
 
 */
 char *delRegion(int start, int end, Word *word) {

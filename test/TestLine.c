@@ -85,4 +85,22 @@ TEST(Line, AddWord) {
 
   move = forwardWord(move);
   TEST_ASSERT_EQUAL_STRING(" ", move->string);
+
+  move = removeWord(line1, move);
+  TEST_ASSERT_EQUAL_STRING("World", move->string);
+
+  move = removeWord(line1, move);
+  TEST_ASSERT_EQUAL_STRING("!", move->string);
+
+  move = removeWord(line1, move);
+  TEST_ASSERT_EQUAL_STRING(",", move->string);
+
+  move = removeWord(line1, move);
+  TEST_ASSERT_EQUAL_STRING("Hello", move->string);
+
+  Word *newWord = initWord();
+  addString((char *)"There", 0, 0, newWord);
+
+  appendWord(newWord, line1);
+  TEST_ASSERT_EQUAL_STRING("There", getLast(line1)->string);
 }
