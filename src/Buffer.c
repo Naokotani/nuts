@@ -23,8 +23,7 @@ a 'Point' which represents the users position in NUTS.
 
 Buffer *initBuffer(char *name) {
   Buffer *buffer = malloc(sizeof(Buffer));
-  buffer->fl = NULL;
-  buffer->ll = NULL;
+  buffer->head = NULL;
   buffer->nl = 0;
   buffer->nc = 0;
   buffer->nw = 0;
@@ -40,7 +39,7 @@ void freeBuffer(Buffer *buffer) {
     free(buffer->path);
   }
   Line *freeLine;
-  Line *currLine = buffer->fl;
+  Line *currLine = buffer->head;
   while (currLine != NULL) {
     freeLine = currLine;
     // TODO use freeLine function

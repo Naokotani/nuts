@@ -7,8 +7,7 @@
   Functions for initalizing, destroying and manipulating `Line`:
 
   typedef struct Line {
-    Word *first;       // First word in the line.
-    Word *last;        // Last word in the line.
+    Word *head;        // First word in the line.
     struct Line *next; // Pointer to the next line in the buffer.
     struct Line *prev; // Pointer to the previous line in the buffer.
     int lineNum;       // currect line number
@@ -23,8 +22,7 @@
 
 Line *initLine(int linNum) {
   Line *line = malloc(sizeof(Line));
-  line->fw = NULL;
-  line->lw = NULL;
+  line->head = NULL;
   line->next = NULL;
   line->prev = NULL;
   line->lineNum = linNum;
@@ -32,20 +30,41 @@ Line *initLine(int linNum) {
 }
 
 Line *appendWord(Word *word, Line *line) {
-  if (line->fw == NULL) {
-    line->fw = word;
-    line->lw = word;
-    return line;
+  if (line->head == NULL) {
+    line->head = word;
   } else {
+    Word *curr, *prev;
+    curr = prev = line->head;
+    while ((curr = curr->next)) {
+      if (curr->next == NULL)
+        prev = curr;
+    }
+
+    prev->next = word;
+    word->prev = prev;
   }
 
   return line;
 }
 
+Word *getLast(Line *line) {
+  Word *word;
+  if (line->head->next == NULL)
+    word = line->head;
+
+  Word *curr = line->head;
+  while ((curr = curr->next))
+    if (curr->next == NULL)
+      word = curr;
+
+  return word;
+}
+
 void printLine(Line *line) {
   int i = 0;
-  for (Word *ptr = line->fw;; ptr = ptr->next) {
+  for (Word *ptr = line->head;; ptr = ptr->next) {
     printf("%s", ptr->string);
+    // TODO: remove the i from the test.
     if (ptr->next == NULL || i > 10)
       break;
 
@@ -55,14 +74,11 @@ void printLine(Line *line) {
 }
 
 void freeLine(Line *line) {
-  if (line->fw != NULL) {
-    // Word *fWord;
-    // Word *currWord = line->fw;
-    // while (currWord != NULL) {
-    //   fWord = currWord;
-    //   freeWord(fWord);
-    //   currWord = currWord->next;
-    // }
+  while (line->head != NULL) {
+    Word *ptr = line->head;
+    line->head = line->head->next;
+    free(ptr->string);
+    free(ptr);
   }
   free(line);
 }

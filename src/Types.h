@@ -14,16 +14,14 @@ typedef struct Word {
 } Word;
 
 typedef struct Line {
-  Word *fw;          // First word in the line.
-  Word *lw;          // Last word in the line.
+  Word *head;        // First word in the line.
   struct Line *next; // Pointer to the next line in the buffer.
   struct Line *prev; // Pointer to the previous line in the buffer.
   int lineNum;       // currect line number
 } Line;
 
 typedef struct Buffer {
-  Line *fl;   // First line in the buffer.
-  Line *ll;   // Last line in the buffer.
+  Line *head; // First line in the buffer.
   int nl;     // Total number of lines in the buffer.
   int nw;     // Total number of words in the buffer.
   int nc;     // Total number of characterse in the buffer.

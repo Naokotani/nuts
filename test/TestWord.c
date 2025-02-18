@@ -2,9 +2,7 @@
 #include "unity.h"
 #include "unity_fixture.h"
 
-Word *word1;
-Word *word2;
-Word *word3;
+Word *word1, *word2, *word3;
 
 TEST_GROUP(Word);
 
