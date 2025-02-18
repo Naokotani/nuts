@@ -74,6 +74,33 @@ Word *backWord(Word *word) {
     return word;
 }
 
+Word *removeWord(Line *line, Word *word) {
+  Word *next, *prev, *move;
+  prev = word->prev;
+  next = word->next;
+
+  if (word->next)
+    move = word->next;
+  else if (word->prev)
+    move = word->prev;
+  else
+    move = NULL;
+
+  if (next && prev) {
+    prev->next = next;
+    next->prev = prev;
+  } else if (next) {
+    line->head = next;
+    next->prev = NULL;
+  } else if (prev) {
+    prev->next = NULL;
+  }
+
+  freeWord(word);
+
+  return move;
+}
+
 void printLine(Line *line) {
   int i = 0;
   for (Word *ptr = line->head;; ptr = ptr->next) {
