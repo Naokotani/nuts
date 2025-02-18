@@ -29,6 +29,12 @@ Line *initLine(int linNum) {
   return line;
 }
 
+/*
+Appeneds a word to a line by adding a node to the doubly linked list of `Word`
+that the `Line` points to. `Line`.
+
+Example: appendWord(exampleWord, exampleLine);
+*/
 Line *appendWord(Word *word, Line *line) {
   if (!line->head) {
     line->head = word;
@@ -47,6 +53,7 @@ Line *appendWord(Word *word, Line *line) {
   return line;
 }
 
+// Gets the last node in the linked list.
 Word *getLast(Line *line) {
   Word *word;
   if (!line->head->next)
@@ -60,6 +67,8 @@ Word *getLast(Line *line) {
   return word;
 }
 
+// Given a `Word` move to the next `Word` in the list of words. If `Word` is the
+// final word, return the argument directly.
 Word *forwardWord(Word *word) {
   if (word->next)
     return word->next;
@@ -67,6 +76,8 @@ Word *forwardWord(Word *word) {
     return word;
 }
 
+// Given a `Word` move to the previous `Word` in the list of words. If `Word` is
+// the first word(IE. line->head), return the argument directly.
 Word *backWord(Word *word) {
   if (word->prev)
     return word->prev;
@@ -74,6 +85,13 @@ Word *backWord(Word *word) {
     return word;
 }
 
+/*
+Remove a `Word` from the linked list. Checks if it is at the beginning, middle
+or end of the list and sets next/prev to or to the appropriate nodes.
+
+example: removeWord(exampleLine, exampleWord);
+
+*/
 Word *removeWord(Line *line, Word *word) {
   Word *next, *prev, *move;
   prev = word->prev;
@@ -94,6 +112,8 @@ Word *removeWord(Line *line, Word *word) {
     next->prev = NULL;
   } else if (prev) {
     prev->next = NULL;
+  } else if (!next && !prev) {
+    line->head = NULL;
   }
 
   freeWord(word);
@@ -101,6 +121,26 @@ Word *removeWord(Line *line, Word *word) {
   return move;
 }
 
+Word *insertWord(Line *line, Word *word, Word *loc) {
+  if (loc->prev) {
+    // Set new words prev and next.
+    word->prev = loc->prev;
+    word->next = loc;
+
+    // Set locs old previous' new next.
+    loc->prev->next = word;
+    // Set locs new prevoius
+    loc->prev = word;
+  } else {
+    word->prev = NULL;
+    loc->prev = word;
+    word->next = loc;
+  }
+
+  return word;
+}
+
+// Prints all nodes in a linked list. Should be mostly for debuggin.
 void printLine(Line *line) {
   int i = 0;
   for (Word *ptr = line->head;; ptr = ptr->next) {
@@ -113,12 +153,13 @@ void printLine(Line *line) {
   printf("\n");
 }
 
+// Frees the line and all words contained in the line, add all strings in the
+// words.
 void freeLine(Line *line) {
   while (line->head) {
     Word *ptr = line->head;
     line->head = line->head->next;
-    free(ptr->string);
-    free(ptr);
+    freeWord(ptr);
   }
   free(line);
 }

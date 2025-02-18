@@ -59,6 +59,9 @@ TEST(Line, AddWord) {
   TEST_ASSERT_EQUAL_STRING("!", getLast(line1)->string);
   TEST_ASSERT_EQUAL_STRING("World", getLast(line1)->prev->string);
 
+  putchar('\n');
+  printLine(line1);
+
   move = forwardWord(line1->head);
   TEST_ASSERT_EQUAL_STRING(",", move->string);
 
@@ -103,4 +106,22 @@ TEST(Line, AddWord) {
 
   appendWord(newWord, line1);
   TEST_ASSERT_EQUAL_STRING("There", getLast(line1)->string);
+
+  move = forwardWord(move);
+  TEST_ASSERT_EQUAL_STRING("There", move->string);
+
+  Word *space = initWord();
+  Word *comma = initWord();
+  Word *bang = initWord();
+  addChar(' ', 0, space);
+  addChar(',', 0, comma);
+  addChar('!', 0, bang);
+
+  move = insertWord(line1, space, move);
+  TEST_ASSERT_EQUAL_STRING(" ", move->string);
+
+  move = insertWord(line1, comma, move);
+  appendWord(bang, line1);
+
+  printLine(line1);
 }

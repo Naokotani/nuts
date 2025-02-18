@@ -10,5 +10,6 @@ Word *getLast(Line *line);
 Word *forwardWord(Word *word);
 Word *backWord(Word *word);
 Word *removeWord(Line *line, Word *word);
+Word *insertWord(Line *line, Word *word, Word *loc);
 
 #endif

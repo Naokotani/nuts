@@ -27,4 +27,6 @@ deletions or additions were not at the end of the word.
 
 I have started work on `Line.c` adding functions to append, get last, move the
 "cursor" and remove nodes. All seem to work. I had also added test for all the
-examples in `Word.c`, so I can be more sure they stay accurate
+examples in `Word.c`, so I can be more sure they stay accurate. Next up I need
+to add examples and do the same for `Line.c`, and add an insert function to
+`Line.c`.
