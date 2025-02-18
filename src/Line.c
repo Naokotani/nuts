@@ -30,7 +30,7 @@ Line *initLine(int linNum) {
 }
 
 Line *appendWord(Word *word, Line *line) {
-  if (line->head == NULL) {
+  if (!line->head) {
     line->head = word;
   } else {
     Word *curr, *prev;
@@ -49,23 +49,36 @@ Line *appendWord(Word *word, Line *line) {
 
 Word *getLast(Line *line) {
   Word *word;
-  if (line->head->next == NULL)
+  if (!line->head->next)
     word = line->head;
 
   Word *curr = line->head;
   while ((curr = curr->next))
-    if (curr->next == NULL)
+    if (!curr->next)
       word = curr;
 
   return word;
+}
+
+Word *forwardWord(Word *word) {
+  if (word->next)
+    return word->next;
+  else
+    return word;
+}
+
+Word *backWord(Word *word) {
+  if (word->prev)
+    return word->prev;
+  else
+    return word;
 }
 
 void printLine(Line *line) {
   int i = 0;
   for (Word *ptr = line->head;; ptr = ptr->next) {
     printf("%s", ptr->string);
-    // TODO: remove the i from the test.
-    if (ptr->next == NULL || i > 10)
+    if (ptr->next == NULL)
       break;
 
     i++;
@@ -74,7 +87,7 @@ void printLine(Line *line) {
 }
 
 void freeLine(Line *line) {
-  while (line->head != NULL) {
+  while (line->head) {
     Word *ptr = line->head;
     line->head = line->head->next;
     free(ptr->string);
