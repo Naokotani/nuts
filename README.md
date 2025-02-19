@@ -25,10 +25,8 @@ deletions or additions were not at the end of the word.
 
 ## Todo
 
-`Line.c` has most of the basic functionality that it needs and is all tested. I
-currently have the word count stored in the buffer struct. I should remove this
-and store each line's size in the line, and then I can create a buffer function
-that scans the lines to sum their individual word counts to get the total word
-count. I am currently not using the white space boolean, I should also add a
-punctuation boolean so I can have different word counts, with white space, with
-punctuation character words only etc.
+- I am currently not using the white space boolean, I should do so.
+- I should also add a punctuation boolean so I can have different word counts,
+  with white space, with punctuation character words only etc.
+- Create `Buffer.c` functions to manage a linked list of `Line`, word count,
+  character count.

@@ -45,19 +45,17 @@ TEST(Line, AddWord) {
 
   appendWord(word2, line1);
   TEST_ASSERT_EQUAL_STRING(",", getLast(line1)->string);
-  TEST_ASSERT_EQUAL_STRING("Hello", getLast(line1)->prev->string);
 
   appendWord(word3, line1);
   TEST_ASSERT_EQUAL_STRING(" ", getLast(line1)->string);
-  TEST_ASSERT_EQUAL_STRING(",", getLast(line1)->prev->string);
 
   appendWord(word4, line1);
   TEST_ASSERT_EQUAL_STRING("World", getLast(line1)->string);
-  TEST_ASSERT_EQUAL_STRING(" ", getLast(line1)->prev->string);
 
   appendWord(word5, line1);
   TEST_ASSERT_EQUAL_STRING("!", getLast(line1)->string);
-  TEST_ASSERT_EQUAL_STRING("World", getLast(line1)->prev->string);
+
+  TEST_ASSERT_EQUAL(5, line1->size);
 
   putchar('\n');
   printLine(line1);
@@ -101,6 +99,8 @@ TEST(Line, AddWord) {
   move = removeWord(line1, move);
   TEST_ASSERT_EQUAL_STRING("Hello", move->string);
 
+  TEST_ASSERT_EQUAL(1, line1->size);
+
   Word *newWord = initWord();
   addString((char *)"There", 0, 0, newWord);
 
@@ -122,6 +122,8 @@ TEST(Line, AddWord) {
 
   move = insertWord(line1, comma, move);
   appendWord(bang, line1);
+
+  TEST_ASSERT_EQUAL(5, line1->size);
 
   printLine(line1);
 }

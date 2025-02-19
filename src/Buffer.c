@@ -25,8 +25,6 @@ Buffer *initBuffer(char *name) {
   Buffer *buffer = malloc(sizeof(Buffer));
   buffer->head = NULL;
   buffer->nl = 0;
-  buffer->nc = 0;
-  buffer->nw = 0;
   buffer->name = calloc(strlen(name) + 1, sizeof(char));
   strcpy(buffer->name, name);
   buffer->path = NULL;

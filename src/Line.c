@@ -19,10 +19,10 @@
   line represents line down in the buffer and the prev line represents a line up
   in the buffer.
 */
-// TODO: need to tack size of `Line` and remove this info from `Buffer`
 
 Line *initLine(int linNum) {
   Line *line = malloc(sizeof(Line));
+  line->size = 0;
   line->head = NULL;
   line->next = NULL;
   line->prev = NULL;
@@ -51,6 +51,7 @@ Line *appendWord(Word *word, Line *line) {
     word->prev = prev;
   }
 
+  line->size++;
   return line;
 }
 
@@ -119,6 +120,7 @@ Word *removeWord(Line *line, Word *word) {
 
   freeWord(word);
 
+  line->size--;
   return move;
 }
 
@@ -142,6 +144,7 @@ Word *insertWord(Line *line, Word *word, Word *loc) {
     word->next = loc;
   }
 
+  line->size++;
   return word;
 }
 

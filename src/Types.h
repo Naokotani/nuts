@@ -13,9 +13,9 @@ typedef struct Word {
   bool whiteSpace;   // Is the word whitespace? (tabs and/or spaces)
 } Word;
 
-// TODO: need to track the size of the list.
 typedef struct Line {
   Word *head;        // First word in the line.
+  unsigned int size; // Number of Words in list
   struct Line *next; // Pointer to the next line in the buffer.
   struct Line *prev; // Pointer to the previous line in the buffer.
   int lineNum;       // currect line number
@@ -24,8 +24,6 @@ typedef struct Line {
 typedef struct Buffer {
   Line *head; // First line in the buffer.
   int nl;     // Total number of lines in the buffer.
-  int nw;     // Total number of words in the buffer.
-  int nc;     // Total number of characterse in the buffer.
   char *name; // Name of the buffer.
   char *path; // file path associated with the buffer.
 } Buffer;
