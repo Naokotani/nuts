@@ -41,50 +41,50 @@ TEST(Line, AddWord) {
   addString((char *)"!", 0, 0, word5);
 
   appendWord(word1, line1);
-  TEST_ASSERT_EQUAL_STRING("Hello", getLast(line1)->string);
+  TEST_ASSERT_EQUAL_STRING("Hello", getLastWord(line1)->string);
 
   appendWord(word2, line1);
-  TEST_ASSERT_EQUAL_STRING(",", getLast(line1)->string);
+  TEST_ASSERT_EQUAL_STRING(",", getLastWord(line1)->string);
 
   appendWord(word3, line1);
-  TEST_ASSERT_EQUAL_STRING(" ", getLast(line1)->string);
+  TEST_ASSERT_EQUAL_STRING(" ", getLastWord(line1)->string);
 
   appendWord(word4, line1);
-  TEST_ASSERT_EQUAL_STRING("World", getLast(line1)->string);
+  TEST_ASSERT_EQUAL_STRING("World", getLastWord(line1)->string);
 
   appendWord(word5, line1);
-  TEST_ASSERT_EQUAL_STRING("!", getLast(line1)->string);
+  TEST_ASSERT_EQUAL_STRING("!", getLastWord(line1)->string);
 
   TEST_ASSERT_EQUAL(5, line1->size);
 
   putchar('\n');
   printLine(line1);
 
-  move = forwardWord(line1->head);
+  move = nextWord(line1->head);
   TEST_ASSERT_EQUAL_STRING(",", move->string);
 
-  move = forwardWord(move);
+  move = nextWord(move);
   TEST_ASSERT_EQUAL_STRING(" ", move->string);
 
-  move = forwardWord(move);
+  move = nextWord(move);
   TEST_ASSERT_EQUAL_STRING("World", move->string);
 
-  move = forwardWord(move);
+  move = nextWord(move);
   TEST_ASSERT_EQUAL_STRING("!", move->string);
 
-  move = forwardWord(move);
+  move = nextWord(move);
   TEST_ASSERT_EQUAL_STRING("!", move->string);
 
-  move = backWord(move);
+  move = prevWord(move);
   TEST_ASSERT_EQUAL_STRING("World", move->string);
 
-  move = backWord(move);
+  move = prevWord(move);
   TEST_ASSERT_EQUAL_STRING(" ", move->string);
 
-  move = backWord(move);
+  move = prevWord(move);
   TEST_ASSERT_EQUAL_STRING(",", move->string);
 
-  move = forwardWord(move);
+  move = nextWord(move);
   TEST_ASSERT_EQUAL_STRING(" ", move->string);
 
   move = removeWord(line1, move);
@@ -105,9 +105,9 @@ TEST(Line, AddWord) {
   addString((char *)"There", 0, 0, newWord);
 
   appendWord(newWord, line1);
-  TEST_ASSERT_EQUAL_STRING("There", getLast(line1)->string);
+  TEST_ASSERT_EQUAL_STRING("There", getLastWord(line1)->string);
 
-  move = forwardWord(move);
+  move = nextWord(move);
   TEST_ASSERT_EQUAL_STRING("There", move->string);
 
   Word *space = initWord();

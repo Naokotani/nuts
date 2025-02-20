@@ -56,7 +56,7 @@ Line *appendWord(Word *word, Line *line) {
 }
 
 // Gets the last node in the linked list.
-Word *getLast(Line *line) {
+Word *getLastWord(Line *line) {
   Word *word;
   if (!line->head->next)
     word = line->head;
@@ -71,7 +71,7 @@ Word *getLast(Line *line) {
 
 // Given a `Word` move to the next `Word` in the list of words. If `Word` is the
 // final word, return the argument directly.
-Word *forwardWord(Word *word) {
+Word *nextWord(Word *word) {
   if (word->next)
     return word->next;
   else
@@ -80,7 +80,7 @@ Word *forwardWord(Word *word) {
 
 // Given a `Word` move to the previous `Word` in the list of words. If `Word` is
 // the first word(IE. line->head), return the argument directly.
-Word *backWord(Word *word) {
+Word *prevWord(Word *word) {
   if (word->prev)
     return word->prev;
   else
