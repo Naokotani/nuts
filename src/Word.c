@@ -49,6 +49,7 @@ Important to note that 4 is the index just part the "r" in her. the final
 possible index that can be accessed (IE. word size - 1).
  */
 char *addString(char *string, int start, int end, Word *word) {
+  // TODO: return if less than 0
   if (!checkIndices(start, end, word->size))
     return word->string;
 

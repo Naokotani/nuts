@@ -38,6 +38,8 @@ typedef struct Point {
            // one accounts for 0 index, while `Word->size` is an absolute size).
 } Point;
 
+typedef enum CharType { WHITESPACE, LETTER, SPECIAL, NEWLINE } CharType;
+
 /*
 Conecpt of "Region" similar to vi "visual mode" or Emacs region. The beginning
 refers to the lowest `Line` > `Word` > `Word->string` value in that order of
