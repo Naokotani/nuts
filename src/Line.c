@@ -37,7 +37,7 @@ that the `Line` points to. `Line`.
 Example: appendWord(exampleWord, exampleLine);
 */
 Line *appendWord(Word *word, Line *line) {
-  if (!line->head) {
+  if (line->head == NULL) {
     line->head = word;
   } else {
     Word *curr, *prev;
@@ -150,13 +150,13 @@ Word *insertWord(Line *line, Word *word, Word *loc) {
 
 // Prints all nodes in a linked list. Should be mostly for debuggin.
 void printLine(Line *line) {
-  int i = 0;
+  if (line->head == NULL) {
+    perror("Line not initalized.\n");
+  }
   for (Word *ptr = line->head;; ptr = ptr->next) {
     printf("%s", ptr->string);
     if (ptr->next == NULL)
       break;
-
-    i++;
   }
   printf("\n");
 }

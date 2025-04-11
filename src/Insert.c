@@ -1,3 +1,4 @@
+#include "Buffer.h"
 #include "Character.h"
 #include "Line.h"
 #include "Types.h"
@@ -17,39 +18,47 @@
 
 Point *insertChar(Point *point, char newCh) {
 
-  char oldCh = point->word->string[point->strIndex];
-  CharType oldCharType = getCharType(oldCh);
-  CharType newCharType = getCharType(newCh);
+  if (point->word == NULL) {
+    perror("Word not initizlied for point.\n");
+    return point;
+  }
 
-  if (newCharType == LETTER && oldCharType == LETTER ||
-      newCharType == WHITESPACE && oldCharType == WHITESPACE) {
-    addChar(newCh, point->strIndex + 1, point->word);
+  char oldCh;
+
+  if (point->word->size == 0) {
+    oldCh = '\0';
+    addChar(newCh, point->strIndex, point->word);
     point->strIndex += 1;
-  } else if (newCharType == LETTER && oldCharType == WHITESPACE ||
-             newCharType == WHITESPACE && oldCharType == LETTER ||
-             newCharType == SPECIAL) {
-    Word *newWord = initWord();
-    addChar(newCh, 1, newWord);
-    appendWord(newWord, point->line);
-    point->word = newWord;
-    point->strIndex = 1;
-  } else if (newCharType == NEWLINE) {
-    if (newCh == 10) {
-      if (point->word->prev == NULL &&
-          getLastWord(point->line)->string[0] == 13) {
-        addChar(newCh, 2, getLastWord(point->line));
-        // Early return to handle windows new lines.
-        return point;
-        addChar(newCh, 2, point->word);
-      } else {
-        Word *word = initWord();
-        Word *newLineWord = initWord();
-        addChar(newCh, 1, word);
-        appendWord(word, point->line);
-        point->line = initLine(point->line->lineNum + 1);
-      }
+  } else {
+    oldCh = point->word->string[point->strIndex - 1];
+
+    CharType oldCharType = getCharType(oldCh);
+    CharType newCharType = getCharType(newCh);
+
+    if (newCharType == LETTER && oldCharType == WHITESPACE ||
+        newCharType == WHITESPACE && oldCharType == LETTER ||
+        newCharType == SPECIAL) {
+      Word *newWord = initWord();
+      addChar(newCh, 0, newWord);
+      appendWord(newWord, point->line);
+      point->word = newWord;
+      point->strIndex = 1;
+    } else if (newCharType == NEWLINE) {
+      Line *newLine = initLine(point->line->lineNum + 1);
+      appendLine(newLine, point->buffer);
+      point->line = newLine;
+      Word *newWord = initWord();
+      addChar(newCh, 0, newWord);
+      appendWord(newWord, point->line);
+      point->word = newWord;
+      point->strIndex = 1;
+    } else {
+      addChar(newCh, point->strIndex, point->word);
+      point->strIndex += 1;
     }
   }
+
+  printBuffer(point->buffer);
 
   return point;
 }

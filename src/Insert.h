@@ -2,6 +2,6 @@
 #ifndef INSERT
 #define INSERT
 
-Point *insertChar(Point *point);
+Point *insertChar(Point *point, char ch);
 
 #endif

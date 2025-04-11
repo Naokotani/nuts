@@ -4,6 +4,7 @@
 
 Buffer *initBuffer(char *name);
 void freeBuffer(Buffer *buffer);
+void printBuffer(Buffer *buffer);
 
 // Insert and remove.
 Line *appendLine(Line *line, Buffer *buffer);

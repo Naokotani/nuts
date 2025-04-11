@@ -14,7 +14,7 @@
  * size).*/
 /*} Point;*/
 
-Point *initPoint(Buffer *buffer, Line *line);
+Point *initPoint(Buffer *buffer, Line *line, Word *word);
 void freePoint(Point *point);
 Point *charForward(Point *point);
 Point *charBackward(Point *point);

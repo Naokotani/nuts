@@ -1,6 +1,7 @@
 #include "Buffer.h"
 #include "Line.h"
 #include "Types.h"
+#include <stdio.h>
 #include <string.h>
 
 /*
@@ -51,8 +52,9 @@ void freeBuffer(Buffer *buffer) {
 }
 
 Line *appendLine(Line *line, Buffer *buffer) {
-  if (!line->head) {
+  if (buffer->head == NULL) {
     buffer->head = line;
+    return line;
   } else {
     Line *curr, *prev;
     curr = prev = buffer->head;
@@ -67,6 +69,14 @@ Line *appendLine(Line *line, Buffer *buffer) {
 
   buffer->size++;
   return line;
+}
+
+void printBuffer(Buffer *buffer) {
+  Line *line = buffer->head;
+  do {
+    printLine(line);
+    line = line->next;
+  } while (line != NULL);
 }
 
 Line *insertLine(Line *line, Buffer *buffer, Line *loc) {

@@ -30,7 +30,7 @@ bool checkIndex(int index, size_t size);
 
 Word *initWord(void) {
   Word *word = malloc(sizeof(Word));
-  word->size = 1;
+  word->size = 0;
   word->string = malloc(CHAR_BUFFER * sizeof(char));
   word->string[0] = '\0';
   word->next = NULL;
@@ -223,16 +223,15 @@ char *delRegion(int start, int end, Word *word) {
 }
 
 bool checkIndex(int index, size_t size) {
-  bool valid = 0;
+ /* bool valid = 0; */
+ /*  if (index < 0) */
+ /*    perror("Index cannot be less than zero"); */
+ /*  else if (index > (int)size) */
+ /*    perror("Index is exceeds size of string"); */
+ /*  else */
+ /*    valid = 1; */
 
-  if (index < 0)
-    perror("Index cannot be less than zero");
-  else if (index >= (int)size)
-    perror("Index is exceeds size of string");
-  else
-    valid = 1;
-
-  return valid;
+  return 1;
 }
 
 bool checkIndices(int start, int end, size_t size) {

@@ -18,7 +18,7 @@ ifeq ($(OS),Windows_NT)
 else
 	CLEANUP = rm -f
 	MKDIR = mkdir -p
-	TARGET_EXTENSION=.out
+	TARGET_EXTENSION=
 endif
 
 C_COMPILER=gcc
@@ -65,9 +65,22 @@ SRC_FILES1=\
   test/test_runners/all_tests.c
 INC_DIRS=-Isrc -I$(UNITY_ROOT)/src -I$(UNITY_ROOT)/extras/fixture/src
 SYMBOLS=-DUNITY_FIXTURE_NO_EXTRAS
+TARGET_BASE2=nuts
+TARGET2=$(TARGET_BASE2)$(TARGET_EXTENSION)
 
-all: clean default
+MAIN_SRC=src/main.c
+SRC_FILES2=$(MAIN_SRC) \
+  src/Buffer.c \
+  src/Line.c \
+  src/Point.c \
+  src/Word.c \
+	src/Insert.c \
+  src/Character.c
 
+nuts: $(SRC_FILES2)
+	$(C_COMPILER) $(CFLAGS) $(INC_DIRS) $(SYMBOLS) $^ -o $@
+
+all: clean nuts
 default:
 	$(C_COMPILER) $(CFLAGS) $(INC_DIRS) $(SYMBOLS) $(SRC_FILES1) -o $(TARGET1)
 	- ./$(TARGET1) -v | sed --unbuffered \
@@ -75,7 +88,7 @@ default:
   -e 's/\(.*PASS.*\)/\o033[32m\1\o033[39m/'
 
 clean:
-	$(CLEANUP) $(TARGET1)
+	$(CLEANUP) $(TARGET1) $(TARGET2)
 
 ci: CFLAGS += -Werror
 ci: default
